@@ -1,42 +1,58 @@
-import { defineStore } from 'pinia';
-import { computed, ref, watch } from 'vue';
+import { action, observable } from 'mobx';
 
-export const useTodoStore = defineStore('todo', () => {
-  /** 收集用户输入的内容 */
-  const task = ref('');
+class TodoStore {
+  @observable
+  list = [
+    { id: 1, task: '学习vue1', isDone: true },
+    { id: 2, task: '学习vue2', isDone: true },
+  ];
 
-  const type = ref('all');
+  @observable
+  type = 'all';
 
-  const list = ref(JSON.parse(localStorage.getItem('todo-list') || '[]'));
-
-  const delById = (id) => {
-    list.value = list.value.filter((item) => item.id !== id);
+  @action
+  updateById = (id) => {
+    this.list = this.list.map((item) => ({
+      ...item,
+      isDone: item.id === id ? !item.isDone : item.isDone,
+    }));
   };
 
-  const add = () => {
-    list.value.push({ task: task.value, id: Date.now(), isDone: false });
-    task.value = '';
-  };
+  @action
+  add(task) {
+    this.list.push({ id: Date.now(), isDone: false, task });
+  }
 
-  const updateType = (_type) => {
-    type.value = _type;
-  };
+  @action
+  delById(id) {
+    this.list = this.list.filter((item) => item.id !== id);
+  }
 
-  watch(
-    list,
-    () => {
-      localStorage.setItem('todo-list', JSON.stringify(list.value));
-    },
-    { deep: true }
-  );
+  @action
+  updateType(type) {
+    this.type = type;
+  }
 
-  const showList = computed(() => {
-    return list.value.filter((item) => {
-      if (type.value === 'all') return true;
-      if (type.value === 'active') return !item.isDone;
-      return item.isDone;
+  // 等同于vue中的计算属性
+  get showList() {
+    return this.list.filter((item) => {
+      if (this.type === 'active') return !item.isDone;
+      if (this.type === 'completed') return item.isDone;
+      return true;
     });
-  });
+  }
 
-  return { showList, delById, add, task, updateType, type };
-});
+  get isAll() {
+    return this.list.length ? this.list.every((item) => item.isDone) : false;
+  }
+
+  @action
+  checkAll(checked) {
+    this.list.forEach((item) => {
+      item.isDone = checked;
+    });
+  }
+}
+
+// 可以让TodoStore保持单例模式
+export default new TodoStore();
