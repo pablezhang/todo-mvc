@@ -20,8 +20,8 @@ jobs:
       - name: Deploy 🚀 # 部署
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
+          token: ${{ secrets.ACCESS_TOKEN }}
           branch: static-pages # 部署后提交到的分支
           folder: docs # 这里填打包好的目录名称
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # VUE_ADMIN_TEMPLATE 是我的 secret 名称，需要替换成你的
-          REPOSITORY_NAME: pablezhang/pablezhang.github.io # 这是我的 github page 仓库
-          TARGET_FOLDER: github-actions-demo # 打包的文件将放到静态服务器 github-actions-demo 目录下
+          target-folder: github-actions-demo # 打包的文件将放到静态服务器 github-actions-demo 目录下
+          repository-name: pablezhang/pablezhang.github.io # 这是我的 github page 仓库
