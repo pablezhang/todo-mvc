@@ -30,5 +30,5 @@ jobs:
           BRANCH: master
           FOLDER: docs
           force: true
-          REPOSITORY_NAME: pablezhang/pablezhang.github.io # 这是我的 github page 仓库
+          REPOSITORY_NAME: pablezhang/pablezhang.github.io # 这是我的 github page  仓库
           TARGET_FOLDER: github-actions-demo # 打包的文件将放到静态服务器 github-actions-demo 目录下
