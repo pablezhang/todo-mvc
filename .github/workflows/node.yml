@@ -24,7 +24,7 @@ jobs:
       - run: npm run build --if-present
 
       - name: Deploy # 将打包内容发布到 github page
-        uses: JamesIves/github-pages-deploy-action@3.5.9 # 使用别人写好的 actions
+        uses: JamesIves/github-pages-deploy-action@v4 # 使用别人写好的 actions
         with: # 自定义环境变量
           ACCESS_TOKEN: ${{ secrets.TODO_MVC }} # VUE_ADMIN_TEMPLATE 是我的 secret 名称，需要替换成你的
           BRANCH: master
