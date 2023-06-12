@@ -15,7 +15,7 @@ export default observer(function Header() {
   };
   return (
     <header className="header">
-      <h1>todos</h1>
+      
       <input
         {...control}
         onKeyDown={handleKeyDown}
