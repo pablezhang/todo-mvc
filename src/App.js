@@ -10,10 +10,6 @@ import './styles/index.css';
 
 export default function App(params) {
   return (
-    <section className="todoapp">
-      <Header />
-      <Main />
-      <Footer />
-    </section>
+    <div>123</div>
   );
 }
